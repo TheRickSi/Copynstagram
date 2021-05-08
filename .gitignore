@@ -134,3 +134,4 @@ pyvenv.cfg
 *.cfg
 copygram/copygram/settings.py
 copygram/copygram/etc/secret_key.txt
+.gitignore
