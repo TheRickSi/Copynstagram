@@ -135,6 +135,5 @@ pyvenv.cfg
 copygram/etc/secret_key.txt
 *.gitignore
 .vscode/extensions.json
-copygram/copygram/urls.py
 .vscode/settings.json
 migrations/
