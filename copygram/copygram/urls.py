@@ -19,10 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 from posts import views as postViews
+from users import views as userViews
 
 urlpatterns = [
 
-    path('admin/', admin.site.urls),
-    path('post/',postViews.listPost),
+    path('admin/', admin.site.urls, name='admin'),
+    path('post/',postViews.listPost,name='feed'),
+    path('users/login/',userViews.logginView,name='login')
 
 ] + static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 
 #Util
 from datetime import datetime
@@ -34,6 +34,6 @@ posts = [
     }
 ]   
 
-
+@login_required
 def listPost(request):
     return render(request, "posts/feed.html",{'posts':posts})
