@@ -25,6 +25,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls, name='admin'),
     path('post/',postViews.listPost,name='feed'),
-    path('users/login/',userViews.logginView,name='login')
+    path('users/login/',userViews.logginView,name='login'),
+    path('users/logout/',userViews.logoutView,name='logout'),
 
 ] + static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)
