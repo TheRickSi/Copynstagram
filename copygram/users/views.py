@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from users.models import Profile
+#Forms
+from users.forms import ProfileForm
+
+
 
 def logginView(request):
     if request.method == 'POST':
@@ -44,5 +48,31 @@ def signupView(request):
         profile.save()
         return redirect('login')
     return render(request,'users/signup.html')
+
+@login_required    
+def updateProfileView(request):
+    """Update a user's profile view"""
+    profile=request.user.profile
+    if request.method == 'POST':
+        form= ProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            data= form.cleaned_data
+            profile.website= data['website']
+            profile.phone= data['phone_number']
+            profile.biography= data['biography']
+            profile.picture= data['picture']
+            profile.save()
+            return redirect('updateProfile')
+    else:
+        form= ProfileForm()
+    return render(
+        request=request,
+        template_name= 'users/update_profile.html',
+        context={
+            'profile':profile,
+            'user':request.user,
+            'form':form
+        }
+        )
 
     
