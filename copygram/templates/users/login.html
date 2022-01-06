@@ -1,0 +1,24 @@
+{% extends 'users/base.html' %}
+
+{% block head-contend %}
+    <TITLe>Login Copygram</TITLe>
+
+{% endblock head-contend %}
+
+{% block container %}
+    {% if error %}
+        <p style="color: red;">{{error}}</p>
+    {% endif %}
+
+    <form action="{%url "login"%}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" class="form-control">
+        </div>
+        <button class="btn btn-primary btn-block mt-5" type="submit">Sing In!</button>
+    </form>
+{% endblock container %}
+

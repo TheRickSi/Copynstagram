@@ -1,7 +1,7 @@
-"""copygram URL Configuration
+"""GeneradorImagenes URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
+    https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,7 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static 
+
+from posts import views as postViews
+from users import views as userViews
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+
+    path('admin/', admin.site.urls, name='admin'),
+
+    path('',postViews.listPost,name='feed'),
+    path('post/new/',postViews.create_post, name='create_post'),
+
+    path('users/login/',userViews.logginView,name='login'),
+    path('users/logout/',userViews.logoutView,name='logout'),
+    path('users/signup/',userViews.signupView,name='signup'),
+    path('users/updateprofile/',userViews.updateProfileView,name='updateProfile'),
+    
+] + static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)
