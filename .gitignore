@@ -136,5 +136,4 @@ copygram/etc/secret_key.txt
 *.gitignore
 .vscode/extensions.json
 .vscode/settings.json
-migrations/
 copygram/media/
