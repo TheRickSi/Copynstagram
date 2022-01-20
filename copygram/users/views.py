@@ -7,12 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 # Exception
-from django.db.utils import IntegrityError
 
 # Models
-from django.contrib.auth.models import User
-from users.models import Profile
+
 from users.forms import ProfileForm
+from users.forms import SignupForm
 
 def login_view(request):
     """Login view."""
@@ -32,30 +31,17 @@ def login_view(request):
 def signup(request):
     """Sign up view."""
     if request.method == 'POST':
-        username = request.POST['username']
-        passwd = request.POST['passwd']
-        passwd_confirmation = request.POST['passwd_confirmation']
-
-        if passwd != passwd_confirmation:
-            return render(request, 'users/signup.html', {'error': 'Password confirmation does not match'})
-
-        try:
-            user = User.objects.create_user(username=username, password=passwd)
-        except IntegrityError:
-            return render(request, 'users/signup.html', {'error': 'Username is already in user'})
-
-        user.first_name = request.POST['first_name']
-        user.last_name = request.POST['last_name']
-        user.email = request.POST['email']
-        user.save()
-
-        profile = Profile(user=user)
-        profile.save()
-
-        return redirect('login')
-
-    return render(request, 'users/signup.html')
-
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = SignupForm()
+    return render(
+        request=request,
+        template_name='users/signup.html',
+        context={'form':form}
+    )
 
 @login_required
 def logout_view(request):
@@ -63,17 +49,18 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+
 @login_required
 def update_profile(request):
-    profile=request.user.profile
+    profile = request.user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            data=form.cleaned_data
-            profile.website=data['website']
-            profile.phone_number=data['phone_number']
-            profile.biography=data['biography']
-            profile.picture=data['picture']
+            data = form.cleaned_data
+            profile.website = data['website']
+            profile.phone_number = data['phone_number']
+            profile.biography = data['biography']
+            profile.picture = data['picture']
             profile.save()
             print(form.cleaned_data)
             return redirect('update_profile')
@@ -81,11 +68,11 @@ def update_profile(request):
         form = ProfileForm()
     return render(
         request=request,
-        template_name= 'users/update_profile.html',
+        template_name='users/update_profile.html',
         context={
             'profile': profile,
             'user': request.user,
-            'form':form
+            'form': form
         }
 
-        )
+    )
