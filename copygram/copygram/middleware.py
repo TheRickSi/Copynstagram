@@ -17,7 +17,7 @@ class ProfileCompletionMiddleware:
     if not request.user.is_anonymous:
         if not request.user.is_staff:
             profile = request.user.profile
-            if not profile.picture or not profile.biography:
+            if not profile.biography:
                 if request.path !=  reverse('update_profile'):
                     return redirect('update_profile')
 

@@ -1,5 +1,6 @@
-from cProfile import Profile
+from users.models import Profile
 from django import forms
+from django.contrib.auth.hashers import make_password
 from users.models import User
 
 
@@ -45,7 +46,7 @@ class SignupForm(forms.Form):
         max_length=50,
         min_length=2,
         widget=forms.TextInput(
-            attrs={'placeholder':'Last Name','class': 'form-control','required': True}
+            attrs={'placeholder':'Last Name','class': 'form-control  ','required': True}
         )
     )
 
@@ -59,15 +60,17 @@ class SignupForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data["username"]
+        template_conf=self.fields.get("username").widget.attrs
         username_taken = User.objects.filter(username=username).exists()
         if username_taken:
+            template_conf['class']='form-control is-invalid'
+            self.fields.get("username").widget.attrs = template_conf
             raise forms.ValidationError('Username is already in Use.')
         return username
 
     def clean(self):
         """Verify Password confirmation match."""
         data = super().clean()
-        print(data)
         password = data['password']
         password_confirmation = data['password_confirmation']
         if password != password_confirmation:
@@ -75,8 +78,9 @@ class SignupForm(forms.Form):
         return data
     
     def save(self):
-        data=self.cleaned_data
+        data=self.cleaned_data 
         data.pop('password_confirmation')
+        data['password']=make_password(data['password'])
         user= User.objects.create(**data)
         profile= Profile.objects.create(user=user)
         profile.save()
