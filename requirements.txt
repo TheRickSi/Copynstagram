@@ -1,5 +1,6 @@
 asgiref==3.3.4
 autopep8==1.6.0
+decouple==0.0.7
 dj-database-url==0.5.0
 Django==3.2.3
 mysqlclient==2.0.3
@@ -10,3 +11,4 @@ python-decouple==3.4
 pytz==2021.1
 sqlparse==0.4.1
 toml==0.10.2
+whitenoise==6.0.0
