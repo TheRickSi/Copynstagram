@@ -10,7 +10,6 @@ class ProfileForm(forms.Form):
     phone_number = forms.CharField(max_length=20, required=True)
     picture = forms.ImageField(required=False)
 
-
 class SignupForm(forms.Form):
     username = forms.CharField(
         min_length=4,

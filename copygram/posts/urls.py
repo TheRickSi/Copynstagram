@@ -5,12 +5,18 @@ from posts import views
 urlpatterns = [
     path(
         route = '',
-        view = views.list_posts,
+        view = views.PostListView.as_view(),
         name = 'feed'
         ),
     path(
-        route='new/',
-        view = views.create_post ,
+        route='posts/new/',
+        view = views.CreatePostView.as_view() ,
         name = 'new_post'
+    ),
+
+    path(
+        route='posts/<int:pk>/',
+        view = views.PostDetailView.as_view() ,
+        name = 'detail'
     ),
 ]

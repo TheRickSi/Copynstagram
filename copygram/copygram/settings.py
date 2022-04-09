@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'copygram.middleware.ProfileCompletionMiddleware',
+    'copygram.middleware.SignupAlreadyMiddleware',
 ]
 
 ROOT_URLCONF = 'copygram.urls'
@@ -142,6 +143,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL='/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

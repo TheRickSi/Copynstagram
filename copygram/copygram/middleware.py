@@ -18,8 +18,21 @@ class ProfileCompletionMiddleware:
         if not request.user.is_staff:
             profile = request.user.profile
             if not profile.biography:
-                if request.path !=  reverse('update_profile'):
-                    return redirect('update_profile')
+                if request.path !=  reverse('users:update_profile'):
+                    return redirect('users:update_profile')
 
     response= self.get_response(request)
+    return response
+  
+class SignupAlreadyMiddleware:
+  "Signup protection when the user already logged"
+  
+  def __init__(self, get_response):
+      self.get_response = get_response
+    
+  def __call__(self, request):
+    if not request.user.is_anonymous:
+      if request.path == reverse('users:signup'):
+        return redirect('posts:feed')
+    response = self.get_response(request)
     return response
