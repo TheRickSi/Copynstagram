@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
 import dj_database_url
-from decouple import config
+from decouple import Config
+
+from pathlib import Path
 import os
 
 
@@ -84,10 +85,11 @@ WSGI_APPLICATION = 'copygram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'default': dj_database_url.config(
-            default= config('DATABASE_URL')
+            default= Config('DATABASE_URL')
         )
     }
 }
