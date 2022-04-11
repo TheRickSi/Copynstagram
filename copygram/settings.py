@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import dj_database_url
 from decouple import Config
 
 from pathlib import Path
@@ -88,9 +87,12 @@ WSGI_APPLICATION = 'copygram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'default': dj_database_url.config(
-            default= Config('DATABASE_URL')
-        )
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': os.environ['DB_DATAB'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASS'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT'],
     }
 }
 
