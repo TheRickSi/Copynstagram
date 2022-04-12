@@ -10,8 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pickle import TRUE
-from tkinter import FALSE
 from decouple import Config
 
 from pathlib import Path
@@ -29,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*s!0fqq%=qq=ftk)u7(b7ggnyp^bky=4kghgxzt(3fv87%^0sv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = FALSE
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
