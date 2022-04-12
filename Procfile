@@ -1,1 +1,1 @@
-web: gunicorn copygram.wsgi --log-file-
+web: gunicorn copygram.wsgi
