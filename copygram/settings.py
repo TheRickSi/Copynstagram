@@ -14,7 +14,8 @@ from decouple import Config
 
 from pathlib import Path
 import os
-
+import cloudinary
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'posts.apps.PostsConfig',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -96,6 +99,12 @@ DATABASES = {
     }
 }
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ['CLOUD'],
+    'API_KEY': os.environ['KEY'],
+    'API_SECRET': os.environ['API_SECRET'],
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
